@@ -1,6 +1,7 @@
 import { type AppType } from "next/app";
 
 import { api } from "~/utils/api";
+import 'focus-visible'
 
 import "~/styles/globals.css";
 
