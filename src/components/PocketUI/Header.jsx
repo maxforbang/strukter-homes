@@ -1,11 +1,13 @@
-import Link from 'next/link'
-import { Popover } from '@headlessui/react'
-import { AnimatePresence, motion } from 'framer-motion'
+// @ts-ignore
+import Link from "next/link";
+import { Popover } from "@headlessui/react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import { Button } from '~/components/PocketUI/Button'
-import { Container } from '~/components/PocketUI/Container'
-import { Logo } from '~/components/PocketUI/Logo'
-import { NavLinks } from '~/components/PocketUI/NavLinks'
+import { Button } from "~/components/PocketUI/Button";
+import { Container } from "~/components/PocketUI/Container";
+// import { Logo } from '~/components/PocketUI/Logo'
+import { Logo } from "public/strukter-logo";
+import { NavLinks } from "~/components/PocketUI/NavLinks";
 
 function MenuIcon(props) {
   return (
@@ -17,7 +19,7 @@ function MenuIcon(props) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 function ChevronUpIcon(props) {
@@ -30,7 +32,7 @@ function ChevronUpIcon(props) {
         strokeLinejoin="round"
       />
     </svg>
-  )
+  );
 }
 
 function MobileNavLink({ children, ...props }) {
@@ -42,7 +44,7 @@ function MobileNavLink({ children, ...props }) {
     >
       {children}
     </Popover.Button>
-  )
+  );
 }
 
 export function Header() {
@@ -51,7 +53,7 @@ export function Header() {
       <nav>
         <Container className="relative z-50 flex justify-between py-8">
           <div className="relative z-10 flex items-center gap-16">
-            <Link href="/" aria-label="Home">
+            <Link href="/" aria-label="Home" className="sm:mb-2">
               <Logo className="h-10 w-auto" />
             </Link>
             <div className="hidden lg:flex lg:gap-10">
@@ -98,23 +100,29 @@ export function Header() {
                           className="absolute inset-x-0 top-0 z-0 origin-top rounded-b-2xl bg-gray-50 px-6 pb-6 pt-32 shadow-2xl shadow-gray-900/20"
                         >
                           <div className="space-y-4">
-                            <MobileNavLink href="#features">
-                              Features
+                            <MobileNavLink href="#team-dashboard">
+                              Team Dashboard
                             </MobileNavLink>
-                            <MobileNavLink href="#reviews">
-                              Reviews
+                            <MobileNavLink href="#guest-app">
+                              Guest App
                             </MobileNavLink>
-                            <MobileNavLink href="#pricing">
-                              Pricing
+                            <MobileNavLink href="#tools">
+                              Tools
                             </MobileNavLink>
-                            <MobileNavLink href="#faqs">FAQs</MobileNavLink>
                           </div>
                           <div className="mt-8 flex flex-col gap-4">
-                            <Button href="/login" variant="outline">
-                              Log in
-                            </Button>
-                            <Button href="#">Download the app</Button>
+                            
+                            <Popover.Button
+                            as={Link}
+                            href="#contact"
+                            className="inline-flex justify-center rounded-lg py-2 px-3 text-sm font-semibold outline-2 outline-offset-2 bg-sky-600 text-white"
+                            
+                          >
+                            Contact
+                          </Popover.Button>
                           </div>
+
+
                         </Popover.Panel>
                       </>
                     )}
@@ -122,15 +130,13 @@ export function Header() {
                 </>
               )}
             </Popover>
-            <Button href="/login" variant="outline" className="hidden lg:block">
+            {/* <Button href="/login" variant="outline" className="hidden lg:block">
               Log in
-            </Button>
-            <Button href="#" className="hidden lg:block">
-              Download
-            </Button>
+            </Button> */}
+            <Button href='#contact' className="hidden lg:block bg-sky-600">Contact</Button>
           </div>
         </Container>
       </nav>
     </header>
-  )
+  );
 }

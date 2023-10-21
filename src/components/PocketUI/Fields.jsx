@@ -1,3 +1,4 @@
+// @ts-ignore
 import clsx from 'clsx'
 
 const formClasses =

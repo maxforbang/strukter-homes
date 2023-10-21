@@ -1,3 +1,4 @@
+// @ts-ignore
 import { forwardRef } from 'react'
 import Link from 'next/link'
 import clsx from 'clsx'

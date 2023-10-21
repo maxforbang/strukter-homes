@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { Resend } from "resend";
 
 import { env } from "~/env.mjs";
 
@@ -14,3 +15,5 @@ export const db =
   });
 
 if (env.NODE_ENV !== "production") globalForPrisma.prisma = db;
+
+export const resend = new Resend(env.RESEND_API_KEY);

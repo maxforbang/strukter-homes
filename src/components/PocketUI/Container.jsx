@@ -1,3 +1,4 @@
+// @ts-ignore
 import clsx from 'clsx'
 
 export function Container({ className, ...props }) {

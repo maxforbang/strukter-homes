@@ -1,24 +1,29 @@
-import { useId, useRef, useState } from 'react'
-import Image from 'next/image'
-import clsx from 'clsx'
-import { motion, useInView, useMotionValue } from 'framer-motion'
+// @ts-ignore
+import { useId, useRef, useState } from "react";
+import Image from "next/image";
+import clsx from "clsx";
+import { motion, useInView, useMotionValue } from "framer-motion";
 
-import { AppScreen } from '~/components/PocketUI/AppScreen'
-import { AppStoreLink } from '~/components/PocketUI/AppStoreLink'
-import { Button } from '~/components/PocketUI/Button'
-import { Container } from '~/components/PocketUI/Container'
-import { PhoneFrame } from '~/components/PocketUI/PhoneFrame'
-import logoBbc from '~/components/PocketUI/images/logos/bbc.svg'
-import logoCbs from '~/components/PocketUI/images/logos/cbs.svg'
-import logoCnn from '~/components/PocketUI/images/logos/cnn.svg'
-import logoFastCompany from '~/components/PocketUI/images/logos/fast-company.svg'
-import logoForbes from '~/components/PocketUI/images/logos/forbes.svg'
-import logoHuffpost from '~/components/PocketUI/images/logos/huffpost.svg'
-import logoTechcrunch from '~/components/PocketUI/images/logos/techcrunch.svg'
-import logoWired from '~/components/PocketUI/images/logos/wired.svg'
+import { AppScreen } from "~/components/PocketUI/AppScreen";
+import { Container } from "~/components/PocketUI/Container";
+import { PhoneFrame } from "~/components/PocketUI/PhoneFrame";
+import logoAirdna from "public/logos/airdna.svg";
+import logoGuesty from "public/logos/guesty.svg";
+import logoHostaway from "public/logos/hostaway.svg";
+import logoLodgify from "public/logos/lodgify.svg";
+import logoQuickbooks from "public/logos/quickbooks.svg";
+import logoMailchimp from "public/logos/mailchimp.svg";
+import logoRing from "public/logos/ring.svg";
+import logoPricelabs from "public/logos/pricelabs.svg";
+import logoNest from "public/logos/nest.svg";
+import logoReviewPro from "public/logos/reviewpro.svg";
+
+import {
+  ChartBarIcon
+} from "@heroicons/react/24/outline";
 
 function BackgroundIllustration(props) {
-  let id = useId()
+  let id = useId();
 
   return (
     <div {...props}>
@@ -83,7 +88,7 @@ function BackgroundIllustration(props) {
         </defs>
       </svg>
     </div>
-  )
+  );
 }
 
 function PlayIcon(props) {
@@ -96,17 +101,18 @@ function PlayIcon(props) {
         stroke="#A3A3A3"
       />
     </svg>
-  )
+  );
 }
 
 const prices = [
-  997.56, 944.34, 972.25, 832.4, 888.76, 834.8, 805.56, 767.38, 861.21, 669.6,
-  694.39, 721.32, 694.03, 610.1, 502.2, 549.56, 611.03, 583.4, 610.14, 660.6,
-  752.11, 721.19, 638.89, 661.7, 694.51, 580.3, 638.0, 613.3, 651.64, 560.51,
-  611.45, 670.68, 752.56,
-]
-const maxPrice = Math.max(...prices)
-const minPrice = Math.min(...prices)
+  921.47, 964.15, 1032.52, 1254.36, 915.23, 1432.54, 1544.21, 1387.96, 1552.28,
+  1788.72, 965.82, 1022.34, 1411.87, 1299.33, 1472.49, 1658.32, 1324.57,
+  1524.48, 1573.61, 911.04, 1488.46, 1732.05, 1123.76, 1444.51, 1257.45,
+  1672.81, 1105.27, 1352.99, 1407.63, 1025.88, 1588.91, 1344.72, 1523.58,
+];
+
+const maxPrice = Math.max(...prices);
+const minPrice = Math.min(...prices);
 
 function Chart({
   className,
@@ -119,55 +125,55 @@ function Chart({
   gridLines = 6,
   ...props
 }) {
-  let width = totalWidth - paddingX * 2
-  let height = totalHeight - paddingY * 2
+  let width = totalWidth - paddingX * 2;
+  let height = totalHeight - paddingY * 2;
 
-  let id = useId()
-  let svgRef = useRef()
-  let pathRef = useRef()
-  let isInView = useInView(svgRef, { amount: 0.5, once: true })
-  let pathWidth = useMotionValue(0)
-  let [interactionEnabled, setInteractionEnabled] = useState(false)
+  let id = useId();
+  let svgRef = useRef();
+  let pathRef = useRef();
+  let isInView = useInView(svgRef, { amount: 0.5, once: true });
+  let pathWidth = useMotionValue(0);
+  let [interactionEnabled, setInteractionEnabled] = useState(false);
 
-  let path = ''
-  let points = []
+  let path = "";
+  let points = [];
 
   for (let index = 0; index < prices.length; index++) {
-    let x = paddingX + (index / (prices.length - 1)) * width
+    let x = paddingX + (index / (prices.length - 1)) * width;
     let y =
       paddingY +
-      (1 - (prices[index] - minPrice) / (maxPrice - minPrice)) * height
-    points.push({ x, y })
-    path += `${index === 0 ? 'M' : 'L'} ${x.toFixed(4)} ${y.toFixed(4)}`
+      (1 - (prices[index] - minPrice) / (maxPrice - minPrice)) * height;
+    points.push({ x, y });
+    path += `${index === 0 ? "M" : "L"} ${x.toFixed(4)} ${y.toFixed(4)}`;
   }
 
   return (
     <svg
       ref={svgRef}
       viewBox={`0 0 ${totalWidth} ${totalHeight}`}
-      className={clsx(className, 'overflow-visible')}
+      className={clsx(className, "overflow-visible")}
       {...(interactionEnabled
         ? {
             onPointerLeave: () => onChangeActivePointIndex(null),
             onPointerMove: (event) => {
-              let x = event.nativeEvent.offsetX
-              let closestPointIndex
-              let closestDistance = Infinity
+              let x = event.nativeEvent.offsetX;
+              let closestPointIndex;
+              let closestDistance = Infinity;
               for (
                 let pointIndex = 0;
                 pointIndex < points.length;
                 pointIndex++
               ) {
-                let point = points[pointIndex]
-                let distance = Math.abs(point.x - x)
+                let point = points[pointIndex];
+                let distance = Math.abs(point.x - x);
                 if (distance < closestDistance) {
-                  closestDistance = distance
-                  closestPointIndex = pointIndex
+                  closestDistance = distance;
+                  closestPointIndex = pointIndex;
                 } else {
-                  break
+                  break;
                 }
               }
-              onChangeActivePointIndex(closestPointIndex)
+              onChangeActivePointIndex(closestPointIndex);
             },
           }
         : {})}
@@ -210,13 +216,13 @@ function Chart({
         strokeLinejoin="round"
         initial={{ pathLength: 0 }}
         transition={{ duration: 1 }}
-        {...(isInView ? { stroke: '#06b6d4', animate: { pathLength: 1 } } : {})}
+        {...(isInView ? { stroke: "#06b6d4", animate: { pathLength: 1 } } : {})}
         onUpdate={({ pathLength }) => {
           pathWidth.set(
             pathRef.current.getPointAtLength(
-              pathLength * pathRef.current.getTotalLength()
-            ).x
-          )
+              pathLength * pathRef.current.getTotalLength(),
+            ).x,
+          );
         }}
         onAnimationComplete={() => setInteractionEnabled(true)}
       />
@@ -241,18 +247,18 @@ function Chart({
         </>
       )}
     </svg>
-  )
+  );
 }
 
 function AppDemo() {
-  let [activePointIndex, setActivePointIndex] = useState(null)
-  let activePriceIndex = activePointIndex ?? prices.length - 1
-  let activeValue = prices[activePriceIndex]
-  let previousValue = prices[activePriceIndex - 1]
+  let [activePointIndex, setActivePointIndex] = useState(null);
+  let activePriceIndex = activePointIndex ?? prices.length - 1;
+  let activeValue = prices[activePriceIndex];
+  let previousValue = prices[activePriceIndex - 1];
   let percentageChange =
     activePriceIndex === 0
       ? null
-      : ((activeValue - previousValue) / previousValue) * 100
+      : ((activeValue - previousValue) / previousValue) * 100;
 
   return (
     <AppScreen>
@@ -260,18 +266,10 @@ function AppDemo() {
         <div className="p-4">
           <div className="flex gap-2">
             <div className="text-xs leading-6 text-gray-500">
-              Tailwind Labs, Inc.
+              Your Vacation Rental Company
             </div>
-            <div className="text-sm text-gray-900">$CSS</div>
-            <svg viewBox="0 0 24 24" className="ml-auto h-6 w-6" fill="none">
-              <path
-                d="M5 12a7 7 0 1 1 14 0 7 7 0 0 1-14 0ZM12 9v6M15 12H9"
-                stroke="#171717"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+
+            <ChartBarIcon className="ml-auto h-6 w-6" />
           </div>
           <div className="mt-3 border-t border-gray-200 pt-5">
             <div className="flex items-baseline gap-2">
@@ -282,12 +280,12 @@ function AppDemo() {
               {percentageChange && (
                 <div
                   className={clsx(
-                    'ml-auto text-sm tabular-nums tracking-tight',
-                    percentageChange >= 0 ? 'text-cyan-500' : 'text-gray-500'
+                    "ml-auto text-sm tabular-nums tracking-tight",
+                    percentageChange >= 0 ? "text-cyan-500" : "text-gray-500",
                   )}
                 >
                   {`${
-                    percentageChange >= 0 ? '+' : ''
+                    percentageChange >= 0 ? "+" : ""
                   }${percentageChange.toFixed(2)}%`}
                 </div>
               )}
@@ -311,27 +309,27 @@ function AppDemo() {
               />
             </div>
             <div className="mt-4 rounded-lg bg-cyan-500 px-4 py-2 text-center text-sm font-semibold text-white">
-              Trade
+              View Details
             </div>
             <div className="mt-3 divide-y divide-gray-100 text-sm">
               <div className="flex justify-between py-1">
-                <div className="text-gray-500">Open</div>
-                <div className="font-medium text-gray-900">6,387.55</div>
+                <div className="text-gray-500">Occupancy Rate</div>
+                <div className="font-medium text-gray-900">76%</div>
               </div>
               <div className="flex justify-between py-1">
-                <div className="text-gray-500">Closed</div>
+                <div className="text-gray-500">Revenue</div>
+                <div className="font-medium text-gray-900">42,387.55</div>
+              </div>
+              <div className="flex justify-between py-1">
+                <div className="text-gray-500">Expenses</div>
                 <div className="font-medium text-gray-900">6,487.09</div>
-              </div>
-              <div className="flex justify-between py-1">
-                <div className="text-gray-500">Low</div>
-                <div className="font-medium text-gray-900">6,322.01</div>
               </div>
             </div>
           </div>
         </div>
       </AppScreen.Body>
     </AppScreen>
-  )
+  );
 }
 
 export function Hero() {
@@ -341,23 +339,24 @@ export function Hero() {
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-8 lg:gap-y-20">
           <div className="relative z-10 mx-auto max-w-2xl lg:col-span-7 lg:max-w-none lg:pt-6 xl:col-span-6">
             <h1 className="text-4xl font-medium tracking-tight text-gray-900">
-              Invest at the perfect time.
+              Cut your vacation rental management time in half{" "}
+              <div className="text-sky-600">without switching softwares.</div>
             </h1>
+
             <p className="mt-6 text-lg text-gray-600">
-              By leveraging insights from our network of industry insiders,
-              you’ll know exactly when to buy to maximize profit, and exactly
-              when to sell to avoid painful losses.
+              Strukter takes{" "}
+              <strong>whatever software you're currently using</strong> and
+              integrates them into a singular, branded application for your
+              vacation rental company. Stop wasting time switching between all
+              of your apps.
+              <br />
+              <br />
+              With all your data in one place, you can increase revenue by{" "}
+              <strong>automating tasks</strong> and{" "}
+              <strong>generating new insights using AI</strong>. Harness the
+              power of the new web. Time is the new luxury, and we're handing it
+              back to you.
             </p>
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-4">
-              <AppStoreLink />
-              <Button
-                href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"
-                variant="outline"
-              >
-                <PlayIcon className="h-6 w-6 flex-none" />
-                <span className="ml-2.5">Watch the video</span>
-              </Button>
-            </div>
           </div>
           <div className="relative mt-10 sm:mt-20 lg:col-span-5 lg:row-span-2 lg:mt-0 xl:col-span-6">
             <BackgroundIllustration className="absolute left-1/2 top-4 h-[1026px] w-[1026px] -translate-x-1/3 stroke-gray-300/70 [mask-image:linear-gradient(to_bottom,white_20%,transparent_75%)] sm:top-16 sm:-translate-x-1/2 lg:-top-16 lg:ml-12 xl:-top-14 xl:ml-0" />
@@ -369,24 +368,31 @@ export function Hero() {
           </div>
           <div className="relative -mt-4 lg:col-span-7 lg:mt-0 xl:col-span-6">
             <p className="text-center text-sm font-semibold text-gray-900 lg:text-left">
-              As featured in
+              Unlimited possible integrations...
             </p>
             <ul
               role="list"
               className="mx-auto mt-8 flex max-w-xl flex-wrap justify-center gap-x-10 gap-y-8 lg:mx-0 lg:justify-start"
             >
               {[
-                ['Forbes', logoForbes],
-                ['TechCrunch', logoTechcrunch],
-                ['Wired', logoWired],
-                ['CNN', logoCnn, 'hidden xl:block'],
-                ['BBC', logoBbc],
-                ['CBS', logoCbs],
-                ['Fast Company', logoFastCompany],
-                ['HuffPost', logoHuffpost, 'hidden xl:block'],
+                ["Guesty", logoGuesty, "scale-125 mx-2"],
+                ["Lodgify", logoLodgify],
+                ["Hostaway", logoHostaway, "scale-125 "],
+                ["Airdna", logoAirdna, "scale-75 -mx-6"],
+                ["Quickbooks", logoQuickbooks],
+                ["Pricelabs", logoPricelabs, 'scale-105'],
+                ["ReviewPro", logoReviewPro, "hidden xl:block scale-105"],
+                ["Mailchimp", logoMailchimp, "hidden xl:block scale-110"],
+                ["Google Nest", logoNest, "hidden xl:block"],
+                ["Ring", logoRing, "hidden xl:block"],
               ].map(([name, logo, className]) => (
-                <li key={name} className={clsx('flex', className)}>
-                  <Image src={logo} alt={name} className="h-8" unoptimized />
+                <li key={name} className={clsx("flex", className)}>
+                  <Image
+                    src={logo}
+                    alt={name}
+                    className="h-8 w-min"
+                    unoptimized
+                  />
                 </li>
               ))}
             </ul>
@@ -394,5 +400,5 @@ export function Hero() {
         </div>
       </Container>
     </div>
-  )
+  );
 }

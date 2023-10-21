@@ -1,13 +1,14 @@
-import { Fragment, useEffect, useId, useRef, useState } from 'react'
-import { Tab } from '@headlessui/react'
-import clsx from 'clsx'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useDebouncedCallback } from 'use-debounce'
+// @ts-ignore
+import { Fragment, useEffect, useId, useRef, useState } from "react";
+import { Tab } from "@headlessui/react";
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
+import { useDebouncedCallback } from "use-debounce";
 
-import { AppScreen } from '~/components/PocketUI/AppScreen'
-import { CircleBackground } from '~/components/PocketUI/CircleBackground'
-import { Container } from '~/components/PocketUI/Container'
-import { PhoneFrame } from '~/components/PocketUI/PhoneFrame'
+import { AppScreen } from "~/components/PocketUI/AppScreen";
+import { CircleBackground } from "~/components/PocketUI/CircleBackground";
+import { Container } from "~/components/PocketUI/Container";
+import { PhoneFrame } from "~/components/PocketUI/PhoneFrame";
 import {
   DiageoLogo,
   LaravelLogo,
@@ -17,34 +18,37 @@ import {
   StaticKitLogo,
   TransistorLogo,
   TupleLogo,
-} from '~/components/PocketUI/StockLogos'
+} from "~/components/PocketUI/StockLogos";
+import Image from "next/image";
+import screenshotAIConcierge from "public/mobileScreenshots/AI_Concierge.png"
+import { ChevronDoubleRightIcon } from "@heroicons/react/24/outline";
 
-const MotionAppScreenHeader = motion(AppScreen.Header)
-const MotionAppScreenBody = motion(AppScreen.Body)
+const MotionAppScreenHeader = motion(AppScreen.Header);
+const MotionAppScreenBody = motion(AppScreen.Body);
 
 const features = [
   {
-    name: 'Invite friends for better returns',
+    name: "24/7 AI Concierge",
     description:
-      'For every friend you invite to Pocket, you get insider notifications 5 seconds sooner. And it’s 10 seconds if you invite an insider.',
+      "Answer 80% of guests' questions with instant responses and personalized recommendations around the clock, all powered by cutting-edge AI.",
     icon: DeviceUserIcon,
-    screen: InviteScreen,
+    screen: AIConcierge,
   },
   {
-    name: 'Notifications on stock dips',
+    name: "Smart Home Controls",
     description:
-      'Get a push notification every time we find out something that’s going to lower the share price on your holdings so you can sell before the information hits the public markets.',
+      "Empower guests with seamless control over their environment, adjusting room settings directly from your app, ensuring the utmost comfort.",
     icon: DeviceNotificationIcon,
     screen: StocksScreen,
   },
   {
-    name: 'Invest what you want',
+    name: "Guest Rewards System",
     description:
-      'We hide your stock purchases behind thousands of anonymous trading accounts, so suspicious activity can never be traced back to you.',
+      "Incentivize repeat stays and positive reviews with an integrated guest points system, making every visit more rewarding for your guests.",
     icon: DeviceTouchIcon,
     screen: InvestScreen,
   },
-]
+];
 
 function DeviceUserIcon(props) {
   return (
@@ -63,7 +67,7 @@ function DeviceUserIcon(props) {
         fill="#A3A3A3"
       />
     </svg>
-  )
+  );
 }
 
 function DeviceNotificationIcon(props) {
@@ -81,11 +85,11 @@ function DeviceNotificationIcon(props) {
         fill="#737373"
       />
     </svg>
-  )
+  );
 }
 
 function DeviceTouchIcon(props) {
-  let id = useId()
+  let id = useId();
 
   return (
     <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" {...props}>
@@ -121,68 +125,67 @@ function DeviceTouchIcon(props) {
         fill="#A3A3A3"
       />
     </svg>
-  )
+  );
 }
 
 const headerAnimation = {
   initial: { opacity: 0, transition: { duration: 0.3 } },
   animate: { opacity: 1, transition: { duration: 0.3, delay: 0.3 } },
   exit: { opacity: 0, transition: { duration: 0.3 } },
-}
+};
 
-const maxZIndex = 2147483647
+const maxZIndex = 2147483647;
 
 const bodyVariantBackwards = {
   opacity: 0.4,
   scale: 0.8,
   zIndex: 0,
-  filter: 'blur(4px)',
+  filter: "blur(4px)",
   zIndex: 0,
   transition: { duration: 0.4 },
-}
+};
 
 const bodyVariantForwards = (custom) => ({
-  y: '100%',
+  y: "100%",
   zIndex: maxZIndex - custom.changeCount,
   transition: { duration: 0.4 },
-})
+});
 
 const bodyAnimation = {
-  initial: 'initial',
-  animate: 'animate',
-  exit: 'exit',
+  initial: "initial",
+  animate: "animate",
+  exit: "exit",
   variants: {
     initial: (custom) =>
       custom.isForwards ? bodyVariantForwards(custom) : bodyVariantBackwards,
     animate: (custom) => ({
-      y: '0%',
+      y: "0%",
       opacity: 1,
       scale: 1,
       zIndex: maxZIndex / 2 - custom.changeCount,
-      filter: 'blur(0px)',
+      filter: "blur(0px)",
       transition: { duration: 0.4 },
     }),
     exit: (custom) =>
       custom.isForwards ? bodyVariantBackwards : bodyVariantForwards(custom),
   },
-}
+};
 
-function InviteScreen({ custom, animated = false }) {
+function AIConcierge({ custom, animated = false }) {
   return (
     <AppScreen className="w-full">
       <MotionAppScreenHeader {...(animated ? headerAnimation : {})}>
-        <AppScreen.Title>Invite people</AppScreen.Title>
+        <AppScreen.Title>AI Assistant</AppScreen.Title>
         <AppScreen.Subtitle>
-          Get tips <span className="text-white">5s sooner</span> for every
-          invite.
+          Ask <span className="text-white">any question</span> about the property or surrounding area.
         </AppScreen.Subtitle>
       </MotionAppScreenHeader>
       <MotionAppScreenBody {...(animated ? { ...bodyAnimation, custom } : {})}>
-        <div className="px-4 py-6">
+        {/* <div className="px-4 py-6">
           <div className="space-y-6">
             {[
-              { label: 'Full name', value: 'Albert H. Wiggin' },
-              { label: 'Email address', value: 'awiggin@chase.com' },
+              { label: "Full name", value: "Albert H. Wiggin" },
+              { label: "Email address", value: "awiggin@chase.com" },
             ].map((field) => (
               <div key={field.label}>
                 <div className="text-sm text-gray-500">{field.label}</div>
@@ -195,77 +198,79 @@ function InviteScreen({ custom, animated = false }) {
           <div className="mt-6 rounded-lg bg-cyan-500 px-3 py-2 text-center text-sm font-semibold text-white">
             Invite person
           </div>
-        </div>
+        </div> */}
+        <div className="relative w-full h-full"></div>
+        <Image src={screenshotAIConcierge} fill alt='AI Concierge' className="rounded-t-2xl object-cover"/>
       </MotionAppScreenBody>
     </AppScreen>
-  )
+  );
 }
 
 function StocksScreen({ custom, animated = false }) {
   return (
     <AppScreen className="w-full">
       <MotionAppScreenHeader {...(animated ? headerAnimation : {})}>
-        <AppScreen.Title>Stocks</AppScreen.Title>
-        <AppScreen.Subtitle>March 9, 2022</AppScreen.Subtitle>
+        <AppScreen.Title>Smart Home Control</AppScreen.Title>
+        <AppScreen.Subtitle>Control the <span className="text-white">entire house</span> through the app or with voice commands.</AppScreen.Subtitle>
       </MotionAppScreenHeader>
       <MotionAppScreenBody {...(animated ? { ...bodyAnimation, custom } : {})}>
         <div className="divide-y divide-gray-100">
           {[
             {
-              name: 'Laravel',
-              price: '4,098.01',
-              change: '+4.98%',
-              color: '#F9322C',
-              logo: LaravelLogo,
-            },
-            {
-              name: 'Tuple',
-              price: '5,451.10',
-              change: '-3.38%',
-              color: '#5A67D8',
-              logo: TupleLogo,
-            },
-            {
-              name: 'Transistor',
-              price: '4,098.41',
-              change: '+6.25%',
-              color: '#2A5B94',
-              logo: TransistorLogo,
-            },
-            {
-              name: 'Diageo',
-              price: '250.65',
-              change: '+1.25%',
-              color: '#3320A7',
-              logo: DiageoLogo,
-            },
-            {
-              name: 'StaticKit',
-              price: '250.65',
-              change: '-3.38%',
-              color: '#2A3034',
-              logo: StaticKitLogo,
-            },
-            {
-              name: 'Statamic',
-              price: '5,040.85',
-              change: '-3.11%',
-              color: '#0EA5E9',
-              logo: StatamicLogo,
-            },
-            {
-              name: 'Mirage',
-              price: '140.44',
-              change: '+9.09%',
-              color: '#16A34A',
+              name: "Thermostat",
+              price: "4,098.01",
+              change: "+4.98%",
+              color: "#F9322C",
               logo: MirageLogo,
             },
             {
-              name: 'Reversable',
-              price: '550.60',
-              change: '-1.25%',
-              color: '#8D8D8D',
+              name: "Pool/Spa",
+              price: "5,451.10",
+              change: "-3.38%",
+              color: "#5A67D8",
+              logo: TransistorLogo,
+            },
+            {
+              name: "Lights",
+              price: "4,098.41",
+              change: "+6.25%",
+              color: "#2A5B94",
+              logo: DiageoLogo,
+            },
+            {
+              name: "Security",
+              price: "250.65",
+              change: "+1.25%",
+              color: "#3320A7",
+              logo: StatamicLogo,
+            },
+            {
+              name: "Music",
+              price: "250.65",
+              change: "-3.38%",
+              color: "#2A3034",
+              logo: StaticKitLogo,
+            },
+            {
+              name: "TV/Media",
+              price: "140.44",
+              change: "+9.09%",
+              color: "#16A34A",
+              logo: TupleLogo,
+            },
+            {
+              name: "Fans",
+              price: "5,040.85",
+              change: "-3.11%",
+              color: "#0EA5E9",
               logo: ReversableLogo,
+            },
+            {
+              name: "Kitchen Appliances",
+              price: "550.60",
+              change: "-1.25%",
+              color: "#8D8D8D",
+              logo: TransistorLogo,
             },
           ].map((stock) => (
             <div key={stock.name} className="flex items-center gap-4 px-4 py-3">
@@ -279,47 +284,35 @@ function StocksScreen({ custom, animated = false }) {
                 {stock.name}
               </div>
               <div className="flex-none text-right">
-                <div className="text-sm font-medium text-gray-900">
-                  {stock.price}
-                </div>
-                <div
-                  className={clsx(
-                    'text-xs leading-5',
-                    stock.change.startsWith('+')
-                      ? 'text-cyan-500'
-                      : 'text-gray-500'
-                  )}
-                >
-                  {stock.change}
-                </div>
+                <ChevronDoubleRightIcon className="h-5 w-5" />
               </div>
             </div>
           ))}
         </div>
       </MotionAppScreenBody>
     </AppScreen>
-  )
+  );
 }
 
 function InvestScreen({ custom, animated = false }) {
   return (
     <AppScreen className="w-full">
       <MotionAppScreenHeader {...(animated ? headerAnimation : {})}>
-        <AppScreen.Title>Buy $LA</AppScreen.Title>
+        <AppScreen.Title>Membership Rewards</AppScreen.Title>
         <AppScreen.Subtitle>
-          <span className="text-white">$34.28</span> per share
+          Earn <span className="text-white">free stays</span> by booking direct and referring others.
         </AppScreen.Subtitle>
       </MotionAppScreenHeader>
       <MotionAppScreenBody {...(animated ? { ...bodyAnimation, custom } : {})}>
         <div className="px-4 py-6">
           <div className="space-y-4">
             {[
-              { label: 'Number of shares', value: '100' },
+              { label: "Total Points", value: "670" },
               {
-                label: 'Current market price',
+                label: "Points Earned This Stay",
                 value: (
                   <div className="flex">
-                    $34.28
+                    85
                     <svg viewBox="0 0 24 24" fill="none" className="h-6 w-6">
                       <path
                         d="M17 15V7H9M17 7 7 17"
@@ -332,7 +325,7 @@ function InvestScreen({ custom, animated = false }) {
                   </div>
                 ),
               },
-              { label: 'Estimated cost', value: '$3,428.00' },
+              { label: "Reward Tier", value: "Silver" },
             ].map((item) => (
               <div
                 key={item.label}
@@ -345,39 +338,39 @@ function InvestScreen({ custom, animated = false }) {
               </div>
             ))}
             <div className="rounded-lg bg-cyan-500 px-3 py-2 text-center text-sm font-semibold text-white">
-              Buy shares
+              Redeem Points
             </div>
           </div>
         </div>
       </MotionAppScreenBody>
     </AppScreen>
-  )
+  );
 }
 
 function usePrevious(value) {
-  let ref = useRef()
+  let ref = useRef();
 
   useEffect(() => {
-    ref.current = value
-  }, [value])
+    ref.current = value;
+  }, [value]);
 
-  return ref.current
+  return ref.current;
 }
 
 function FeaturesDesktop() {
-  let [changeCount, setChangeCount] = useState(0)
-  let [selectedIndex, setSelectedIndex] = useState(0)
-  let prevIndex = usePrevious(selectedIndex)
-  let isForwards = prevIndex === undefined ? true : selectedIndex > prevIndex
+  let [changeCount, setChangeCount] = useState(0);
+  let [selectedIndex, setSelectedIndex] = useState(0);
+  let prevIndex = usePrevious(selectedIndex);
+  let isForwards = prevIndex === undefined ? true : selectedIndex > prevIndex;
 
   let onChange = useDebouncedCallback(
     (selectedIndex) => {
-      setSelectedIndex(selectedIndex)
-      setChangeCount((changeCount) => changeCount + 1)
+      setSelectedIndex(selectedIndex);
+      setChangeCount((changeCount) => changeCount + 1);
     },
     100,
-    { leading: true }
-  )
+    { leading: true },
+  );
 
   return (
     <Tab.Group
@@ -437,47 +430,47 @@ function FeaturesDesktop() {
                       custom={{ isForwards, changeCount }}
                     />
                   </Tab.Panel>
-                ) : null
+                ) : null,
               )}
             </AnimatePresence>
           </Tab.Panels>
         </PhoneFrame>
       </div>
     </Tab.Group>
-  )
+  );
 }
 
 function FeaturesMobile() {
-  let [activeIndex, setActiveIndex] = useState(0)
-  let slideContainerRef = useRef()
-  let slideRefs = useRef([])
+  let [activeIndex, setActiveIndex] = useState(0);
+  let slideContainerRef = useRef();
+  let slideRefs = useRef([]);
 
   useEffect(() => {
     let observer = new window.IntersectionObserver(
       (entries) => {
         for (let entry of entries) {
           if (entry.isIntersecting) {
-            setActiveIndex(slideRefs.current.indexOf(entry.target))
-            break
+            setActiveIndex(slideRefs.current.indexOf(entry.target));
+            break;
           }
         }
       },
       {
         root: slideContainerRef.current,
         threshold: 0.6,
-      }
-    )
+      },
+    );
 
     for (let slide of slideRefs.current) {
       if (slide) {
-        observer.observe(slide)
+        observer.observe(slide);
       }
     }
 
     return () => {
-      observer.disconnect()
-    }
-  }, [slideContainerRef, slideRefs])
+      observer.disconnect();
+    };
+  }, [slideContainerRef, slideRefs]);
 
   return (
     <>
@@ -495,7 +488,7 @@ function FeaturesMobile() {
               <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                 <CircleBackground
                   color="#13B5C8"
-                  className={featureIndex % 2 === 1 ? 'rotate-180' : undefined}
+                  className={featureIndex % 2 === 1 ? "rotate-180" : undefined}
                 />
               </div>
               <PhoneFrame className="relative mx-auto w-full max-w-[366px]">
@@ -520,15 +513,15 @@ function FeaturesMobile() {
             type="button"
             key={featureIndex}
             className={clsx(
-              'relative h-0.5 w-4 rounded-full',
-              featureIndex === activeIndex ? 'bg-gray-300' : 'bg-gray-500'
+              "relative h-0.5 w-4 rounded-full",
+              featureIndex === activeIndex ? "bg-gray-300" : "bg-gray-500",
             )}
             aria-label={`Go to slide ${featureIndex + 1}`}
             onClick={() => {
               slideRefs.current[featureIndex].scrollIntoView({
-                block: 'nearest',
-                inline: 'nearest',
-              })
+                block: "nearest",
+                inline: "nearest",
+              });
             }}
           >
             <span className="absolute -inset-x-1.5 -inset-y-3" />
@@ -536,26 +529,26 @@ function FeaturesMobile() {
         ))}
       </div>
     </>
-  )
+  );
 }
 
 export function PrimaryFeatures() {
   return (
     <section
-      id="features"
+      id="guest-app"
       aria-label="Features for investing all your money"
       className="bg-gray-900 py-20 sm:py-32"
     >
       <Container>
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-3xl">
           <h2 className="text-3xl font-medium tracking-tight text-white">
-            Every feature you need to win. Try it for yourself.
+            Give your guests an app they'll actually use.
           </h2>
           <p className="mt-2 text-lg text-gray-400">
-            Pocket was built for investors like you who play by their own rules
-            and aren’t going to let SEC regulations get in the way of their
-            dreams. If other investing tools are afraid to build it, Pocket has
-            it.
+            We build your company a custom guest app that uses the API
+            integrations from all of your own software and smart home devices.
+            Don't have your own software? We'll provide or recommend what you're
+            missing, along with an array of other cutting-edge features.
           </p>
         </div>
       </Container>
@@ -566,5 +559,5 @@ export function PrimaryFeatures() {
         <FeaturesDesktop />
       </Container>
     </section>
-  )
+  );
 }

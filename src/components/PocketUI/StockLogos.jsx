@@ -1,3 +1,4 @@
+// @ts-ignore
 export function LaravelLogo(props) {
   return (
     <svg viewBox="0 0 40 40" fill="#fff" aria-hidden="true" {...props}>

@@ -1,3 +1,4 @@
+// @ts-ignore
 import Link from 'next/link'
 
 import { Container } from '~/components/PocketUI/Container'

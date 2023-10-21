@@ -1,3 +1,4 @@
+// @ts-ignore
 import { AppStoreLink } from '~/components/PocketUI/AppStoreLink'
 import { CircleBackground } from '~/components/PocketUI/CircleBackground'
 import { Container } from '~/components/PocketUI/Container'

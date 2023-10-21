@@ -1,3 +1,4 @@
+// @ts-ignore
 import { useId } from 'react'
 
 export function CircleBackground({

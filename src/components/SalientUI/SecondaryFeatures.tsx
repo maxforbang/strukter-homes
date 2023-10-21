@@ -1,32 +1,31 @@
-'use client'
+"use client";
 
-import { useId } from 'react'
-import Image, { type ImageProps } from 'next/image'
-import { Tab } from '@headlessui/react'
-import clsx from 'clsx'
+import { useId } from "react";
+import Image, { type ImageProps } from "next/image";
+import { Tab } from "@headlessui/react";
+import clsx from "clsx";
 
-import { Container } from '~/components/SalientUI/Container'
-import screenshotContacts from '~/components/SalientUI/images/screenshots/contacts.png'
-import screenshotInventory from '~/components/SalientUI/images/screenshots/inventory.png'
-import screenshotProfitLoss from '~/components/SalientUI/images/screenshots/profit-loss.png'
-
+import { Container } from "~/components/SalientUI/Container";
+import screenshotPersonalized_Branding from "public/desktopScreenshots/Personalized_Branding.png"
+import screenshotVector_Store from "public/desktopScreenshots/Vector_Store.png"
+import screenshotUnified_Communication from "public/desktopScreenshots/Unified_Communication.png"
 interface Feature {
-  name: React.ReactNode
-  summary: string
-  description: string
-  image: ImageProps['src']
-  icon: React.ComponentType
+  name: React.ReactNode;
+  summary: string;
+  description: string;
+  image: ImageProps["src"];
+  icon: React.ComponentType;
 }
 
 const features: Array<Feature> = [
   {
-    name: 'Reporting',
-    summary: 'Stay on top of things with always up-to-date reporting features.',
+    name: "Unified Communication",
+    summary: "Let any team member pick up any conversation, from any channel.",
     description:
-      'We talked about reporting in the section above but we needed three items here, so mentioning it one more time for posterity.',
-    image: screenshotProfitLoss,
+      "Don't miss a single message again. Let the whole company contribute to guest and contractor communication.",
+    image: screenshotUnified_Communication,
     icon: function ReportingIcon() {
-      let id = useId()
+      const id = useId();
       return (
         <>
           <defs>
@@ -50,16 +49,16 @@ const features: Array<Feature> = [
             strokeLinejoin="round"
           />
         </>
-      )
+      );
     },
   },
   {
-    name: 'Inventory',
+    name: "Global Search",
     summary:
-      'Never lose track of what’s in stock with accurate inventory tracking.',
+      "Parse through your entire company's data ecosystem within seconds.", 
     description:
-      'We don’t offer this as part of our software but that statement is inarguably true. Accurate inventory tracking would help you for sure.',
-    image: screenshotInventory,
+      "Advanced data vector indexing allows you to instantly search through team instruction manuals, financial data, guests' messages, and more using natural language.",
+    image: screenshotVector_Store,
     icon: function InventoryIcon() {
       return (
         <>
@@ -78,16 +77,16 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
   {
-    name: 'Contacts',
+    name: "Personalized Branding",
     summary:
-      'Organize all of your contacts, service providers, and invoices in one place.',
+      "Distinguish your company with your own colors, logos, and slogans.",
     description:
-      'This also isn’t actually a feature, it’s just some friendly advice. We definitely recommend that you do this, you’ll feel really organized and professional.',
-    image: screenshotContacts,
+      "No matter how many properties you manage, create a connection with each of your guests and your team with your own personal branding.",
+    image: screenshotPersonalized_Branding,
     icon: function ContactsIcon() {
       return (
         <>
@@ -101,29 +100,29 @@ const features: Array<Feature> = [
             fill="#fff"
           />
         </>
-      )
+      );
     },
   },
-]
+];
 
 function Feature({
   feature,
   isActive,
   className,
   ...props
-}: React.ComponentPropsWithoutRef<'div'> & {
-  feature: Feature
-  isActive: boolean
+}: React.ComponentPropsWithoutRef<"div"> & {
+  feature: Feature;
+  isActive: boolean;
 }) {
   return (
     <div
-      className={clsx(className, !isActive && 'opacity-75 hover:opacity-100')}
+      className={clsx(className, !isActive && "opacity-75 hover:opacity-100")}
       {...props}
     >
       <div
         className={clsx(
-          'w-9 rounded-lg',
-          isActive ? 'bg-blue-600' : 'bg-slate-500',
+          "w-9 rounded-lg",
+          isActive ? "bg-blue-600" : "bg-slate-500",
         )}
       >
         <svg aria-hidden="true" className="h-9 w-9" fill="none">
@@ -132,18 +131,18 @@ function Feature({
       </div>
       <h3
         className={clsx(
-          'mt-6 text-sm font-medium',
-          isActive ? 'text-blue-600' : 'text-slate-600',
+          "mt-6 text-sm font-medium",
+          isActive ? "text-blue-600" : "text-slate-600",
         )}
       >
         {feature.name}
       </h3>
-      <p className="mt-2 font-display text-xl text-slate-900">
+      <p className="font-display mt-2 text-xl text-slate-900">
         {feature.summary}
       </p>
       <p className="mt-4 text-sm text-slate-600">{feature.description}</p>
     </div>
-  )
+  );
 }
 
 function FeaturesMobile() {
@@ -166,7 +165,7 @@ function FeaturesMobile() {
         </div>
       ))}
     </div>
-  )
+  );
 }
 
 function FeaturesDesktop() {
@@ -199,8 +198,8 @@ function FeaturesDesktop() {
                   static
                   key={feature.summary}
                   className={clsx(
-                    'px-5 transition duration-500 ease-in-out ui-not-focus-visible:outline-none',
-                    featureIndex !== selectedIndex && 'opacity-60',
+                    "ui-not-focus-visible:outline-none px-5 transition duration-500 ease-in-out",
+                    featureIndex !== selectedIndex && "opacity-60",
                   )}
                   style={{ transform: `translateX(-${selectedIndex * 100}%)` }}
                   aria-hidden={featureIndex !== selectedIndex}
@@ -221,29 +220,29 @@ function FeaturesDesktop() {
         </>
       )}
     </Tab.Group>
-  )
+  );
 }
 
 export function SecondaryFeatures() {
   return (
     <section
-      id="secondary-features"
+      id="tools"
       aria-label="Features for simplifying everyday business tasks"
       className="pb-14 pt-20 sm:pb-20 sm:pt-32 lg:pb-32"
     >
       <Container>
         <div className="mx-auto max-w-2xl md:text-center">
           <h2 className="font-display text-3xl tracking-tight text-slate-900 sm:text-4xl">
-            Simplify everyday business tasks.
+            Empower your vacation company.
           </h2>
           <p className="mt-4 text-lg tracking-tight text-slate-700">
-            Because you’d probably be a little confused if we suggested you
-            complicate your everyday business tasks instead.
+            Reclaim your time, enhance your operations, and delight your guests.
+            Experience the future of vacation rental management with us.
           </p>
         </div>
         <FeaturesMobile />
         <FeaturesDesktop />
       </Container>
     </section>
-  )
+  );
 }
