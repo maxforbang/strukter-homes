@@ -13,7 +13,7 @@ export default function Home() {
         <title>Strukter Services</title>
         <meta
           name="description"
-          content="Customized Vacation Rental Technology"
+          content="Custom Vacation Rental Technology Solutions."
         />
         <link rel="icon" href="/favicon.png" />
       </Head>
